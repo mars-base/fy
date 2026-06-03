@@ -1,12 +1,7 @@
 // Global constants and thread-safe mutable state
-use lazy_static::lazy_static;
-use std::sync::Mutex;
-lazy_static! {
-    pub static ref INITIALIZED: Mutex<bool> = Mutex::new(false);
-}
 
-pub const APP_NAME: &str = "fy";
-pub const APP_VERSION: &str = "1.0.1";
+pub const APP_NAME: &str = env!("CARGO_PKG_NAME");
+pub const APP_VERSION: &str = env!("CARGO_PKG_VERSION");
 pub const APP_DESCRIPTION: &str = "Translate text to target language.";
 pub const APP_USAGE: &str = "fy [target language: zh/en/..] [optional: text, or from clipboard]";
 

@@ -27,11 +27,25 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-cargo-
 
+      - name: Show version
+        run: grep '^version' Cargo.toml | head -1 | sed 's/.*"\(.*\)"/version: \1/'
+
+      - name: Show target platform
+        run: rustc -vV | grep host | sed 's/.*: /target: /'
+
       - name: Run unit tests
         run: cargo test -- --nocapture
 
       - name: Build release
-        run: cargo build --release
+        run: |
+          cargo build --release
+          VERSION=$(grep '^version' Cargo.toml | head -1 | sed 's/.*"\(.*\)"/\1/')
+          TARGET=$(rustc -vV | grep host | sed 's/.*: //')
+          echo "Building fy ${VERSION} for ${TARGET}"
+          mkdir -p build
+          cp target/release/fy "build/fy-${VERSION}-${TARGET}"
+          ln -sf "fy-${VERSION}-${TARGET}" build/fy
+          echo "Binary: build/fy-${VERSION}-${TARGET}"
 
       - name: Run integration tests
         run: make check
