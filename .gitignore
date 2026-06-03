@@ -1,0 +1,14 @@
+# Build directories
+build/
+target/
+
+# Log files
+logs/
+
+# IDE files
+*.swp
+*.swo
+.DS_Store
+
+# Tool-generated
+.claude/
