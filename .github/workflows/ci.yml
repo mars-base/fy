@@ -28,10 +28,10 @@ jobs:
             ${{ runner.os }}-cargo-
 
       - name: Show version
-        run: grep '^version' Cargo.toml | head -1 | sed 's/.*"\(.*\)"/version: \1/'
+        run: grep '^version' Cargo.toml | head -1 | sed 's/.*"\(.*\)"/\1/'
 
       - name: Show target platform
-        run: rustc -vV | grep host | sed 's/.*: /target: /'
+        run: rustc -vV | grep host | sed 's/.*: //'
 
       - name: Run unit tests
         run: cargo test -- --nocapture
