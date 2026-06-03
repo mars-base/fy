@@ -57,7 +57,10 @@ clean:
 	cargo clean
 	rm -rf $(BUILD_DIR)
 
+# Install target: default uses glibc build, override with TARGET=musl
+INSTALL_TARGET ?= $(APP_NAME)
+
 .PHONY: install
 install:
-	sudo cp $(BUILD_DIR)/$(APP_NAME) /usr/local/bin/$(APP_NAME)
-	@echo "$(APP_NAME) installed to /usr/local/bin/"
+	sudo cp $(BUILD_DIR)/$(INSTALL_TARGET) /usr/local/bin/$(APP_NAME)
+	@echo "$(APP_NAME) ($(INSTALL_TARGET)) installed to /usr/local/bin/"
