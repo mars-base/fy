@@ -40,23 +40,31 @@ jobs:
       - name: Run unit tests
         run: cargo test -- --nocapture
 
+      - name: Install musl tools
+        run: sudo apt-get update && sudo apt-get install -y musl-tools
+
       - name: Build release
         run: |
-          cargo build --release
           VERSION=$(grep '^version' Cargo.toml | head -1 | sed 's/.*"\(.*\)"/\1/')
           TARGET=$(rustc -vV | grep host | sed 's/.*: //')
-          echo "Building fy ${VERSION} for ${TARGET}"
+          cargo build --release
           mkdir -p build
           BIN="build/fy-${VERSION}-${TARGET}"
           cp target/release/fy "${BIN}"
           ln -sf "fy-${VERSION}-${TARGET}" build/fy
-          echo "BIN=${BIN}" >> $GITHUB_ENV
           echo "Binary: ${BIN}"
+
+          # musl static build
+          rustup target add x86_64-unknown-linux-musl
+          cargo build --release --target x86_64-unknown-linux-musl
+          MUSL_BIN="build/fy-${VERSION}-x86_64-unknown-linux-musl"
+          cp target/x86_64-unknown-linux-musl/release/fy "${MUSL_BIN}"
+          echo "Binary (musl): ${MUSL_BIN}"
 
       - name: Run integration tests
         run: make check
 
-      - name: Upload release asset
+      - name: Upload release assets
         uses: softprops/action-gh-release@v2
         with:
-          files: ${{ env.BIN }}
+          files: build/fy-*
