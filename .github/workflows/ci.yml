@@ -12,8 +12,8 @@ permissions:
   contents: write
 
 jobs:
-  test:
-    name: Test & Build
+  linux:
+    name: Linux
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -52,17 +52,61 @@ jobs:
           BIN="build/fy-${VERSION}-${TARGET}"
           cp target/release/fy "${BIN}"
           ln -sf "fy-${VERSION}-${TARGET}" build/fy
-          echo "Binary: ${BIN}"
+          echo "Built: ${BIN}"
 
           # musl static build
           rustup target add x86_64-unknown-linux-musl
           cargo build --release --target x86_64-unknown-linux-musl
           MUSL_BIN="build/fy-${VERSION}-x86_64-unknown-linux-musl"
           cp target/x86_64-unknown-linux-musl/release/fy "${MUSL_BIN}"
-          echo "Binary (musl): ${MUSL_BIN}"
+          echo "Built: ${MUSL_BIN}"
 
       - name: Run integration tests
         run: make check
+
+      - name: Upload release assets
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/fy-*
+
+  macos:
+    name: macOS (${{ matrix.target }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: macos-13
+            target: x86_64-apple-darwin
+          - os: macos-latest
+            target: aarch64-apple-darwin
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache cargo registry
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
+
+      - name: Show target platform
+        run: echo "target: ${{ matrix.target }}"
+
+      - name: Run unit tests
+        run: cargo test -- --nocapture
+
+      - name: Build release
+        run: |
+          VERSION=$(grep '^version' Cargo.toml | head -1 | sed 's/.*"\(.*\)"/\1/')
+          cargo build --release
+          mkdir -p build
+          BIN="build/fy-${VERSION}-${{ matrix.target }}"
+          cp target/release/fy "${BIN}"
+          echo "Built: ${BIN}"
 
       - name: Upload release assets
         uses: softprops/action-gh-release@v2

@@ -31,6 +31,29 @@ musl:
 	@command -v upx > /dev/null && upx --best $(BUILD_DIR)/$(APP_NAME)-musl || echo "UPX not found, skipping compression."
 	@echo "Musl build done: $(BUILD_DIR)/$(APP_NAME)-musl"
 
+DARWIN_X86_64_TARGET := x86_64-apple-darwin
+DARWIN_ARM64_TARGET := aarch64-apple-darwin
+
+.PHONY: darwin-intel
+darwin-intel:
+ifeq ($(shell uname -s),Darwin)
+	cargo build --release --target $(DARWIN_X86_64_TARGET)
+	cp target/$(DARWIN_X86_64_TARGET)/release/$(APP_NAME) $(BUILD_DIR)/$(APP_NAME)-darwin-amd64
+	@echo "Darwin x86_64 build done: $(BUILD_DIR)/$(APP_NAME)-darwin-amd64"
+else
+	$(error darwin-intel target requires a macOS host. Use CI (GitHub Actions macos runner) for cross-platform builds)
+endif
+
+.PHONY: darwin-arm64
+darwin-arm64:
+ifeq ($(shell uname -s),Darwin)
+	cargo build --release --target $(DARWIN_ARM64_TARGET)
+	cp target/$(DARWIN_ARM64_TARGET)/release/$(APP_NAME) $(BUILD_DIR)/$(APP_NAME)-darwin-arm64
+	@echo "Darwin arm64 build done: $(BUILD_DIR)/$(APP_NAME)-darwin-arm64"
+else
+	$(error darwin-arm64 target requires a macOS host. Use CI (GitHub Actions macos runner) for cross-platform builds)
+endif
+
 .PHONY: test
 test:
 	cargo test -- --nocapture

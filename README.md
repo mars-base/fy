@@ -4,12 +4,23 @@ A command-line translation tool.
 
 ## Installation
 
+### Linux
+
 ```bash
-make build
-sudo make install
+make build && sudo make install        # glibc (dynamically linked)
+make musl && sudo make install-musl    # musl (statically linked, portable)
 ```
 
-This installs `fy` to `/usr/local/bin/`.
+### macOS
+
+```bash
+make darwin-intel && sudo cp build/fy-darwin-amd64 /usr/local/bin/fy   # Intel Mac
+make darwin-arm64 && sudo cp build/fy-darwin-arm64 /usr/local/bin/fy   # Apple Silicon
+```
+
+### Pre-built binaries
+
+Download from [GitHub Releases](https://github.com/wdw8276/fy/releases).
 
 ## Usage
 
@@ -55,9 +66,12 @@ fy -h
 ## Development
 
 ```bash
-make build          # Build release binary
-make check          # Run integration tests
+make build          # Build release binary (glibc)
+make musl           # Build static binary (musl)
+make darwin-intel   # Build macOS x86_64 (macOS host only)
+make darwin-arm64   # Build macOS arm64 (macOS host only)
 make test           # Run unit tests
+make check          # Run integration tests
 make clean          # Clean build artifacts
 ```
 
