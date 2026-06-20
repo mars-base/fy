@@ -4,14 +4,34 @@ A command-line translation tool.
 
 ## Installation
 
-### Linux
+### One-click install
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/wdw8276/fy/main/install.sh | bash
+```
+
+Or download the script and run it manually:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/wdw8276/fy/main/install.sh -o install.sh
+chmod +x install.sh
+./install.sh --help
+./install.sh                      # install latest version
+./install.sh --version v0.1.1     # install specific version
+```
+
+Supported: **macOS Apple Silicon (arm64)** and **Linux x86_64** (musl by default).
+
+### Build from source
+
+**Linux**
 
 ```bash
 make build && sudo make install        # glibc (dynamically linked)
 make musl && sudo make install-musl    # musl (statically linked, portable)
 ```
 
-### macOS
+**macOS**
 
 ```bash
 make darwin-arm64 && sudo cp build/fy-darwin-arm64 /usr/local/bin/fy   # Apple Silicon (arm64)

@@ -28,7 +28,8 @@ async fn translate_async(text: &str, target_language: &str) -> String {
         to_language = "zh-TW".to_string();
     }
 
-    let url = format!("{}?client=gtx&sl=auto&tl={}&dt=t&q={}", vars::GOOGLE_API_URL, to_language, text);
+    let encoded_text = urlencoding::encode(text);
+    let url = format!("{}?client=gtx&sl=auto&tl={}&dt=t&q={}", vars::GOOGLE_API_URL, to_language, encoded_text);
     // println!("Request URL: {}", url);
     let mut headers = HashMap::new();
     headers.insert("User-Agent".to_string(), "Mozilla/5.0 (compatible; translate-script/1.0)".to_string());
