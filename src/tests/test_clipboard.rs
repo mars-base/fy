@@ -89,8 +89,11 @@ mod tests {
         assert_eq!(get_clipboard_text(), "second");
     }
 
-    /// Safety net: get_clipboard_text should never panic under any condition
+    /// Safety net: get_clipboard_text should never panic under any condition.
+    /// macOS headless CI has no NSPasteboard server — arboard can throw ObjC
+    /// exceptions that Rust cannot catch, so this test is skipped on macOS.
     #[test]
+    #[cfg_attr(target_os = "macos", ignore)]
     fn test_get_clipboard_text_never_panics() {
         let _result = get_clipboard_text();
     }
