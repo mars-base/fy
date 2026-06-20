@@ -7,13 +7,13 @@ A command-line translation tool.
 ### One-click install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/wdw8276/fy/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/mars-base/fy/main/install.sh | bash
 ```
 
 Or download the script and run it manually:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/wdw8276/fy/main/install.sh -o install.sh
+curl -fsSL https://raw.githubusercontent.com/mars-base/fy/main/install.sh -o install.sh
 chmod +x install.sh
 ./install.sh --help
 ./install.sh                      # install latest version
@@ -40,7 +40,7 @@ make darwin-arm64 && sudo cp build/fy-darwin-arm64 /usr/local/bin/fy   # Apple S
 
 ### Pre-built binaries
 
-Download from [GitHub Releases](https://github.com/wdw8276/fy/releases). Release builds include:
+Download from [GitHub Releases](https://github.com/mars-base/fy/releases). Release builds include:
 - Linux: glibc + musl (static)
 - macOS: arm64 (Apple Silicon)
 

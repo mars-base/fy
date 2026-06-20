@@ -4,13 +4,13 @@
 # Supports macOS (Apple Silicon) and Linux (x86_64)
 #
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/wdw8276/fy/main/install.sh | bash
-#   curl -fsSL https://raw.githubusercontent.com/wdw8276/fy/main/install.sh | bash -s -- --help
+#   curl -fsSL https://raw.githubusercontent.com/mars-base/fy/main/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/mars-base/fy/main/install.sh | bash -s -- --help
 #
 set -euo pipefail
 
 # ---------- config ----------
-REPO="wdw8276/fy"
+REPO="mars-base/fy"
 APP_NAME="fy"
 INSTALL_DIR="/usr/local/bin"
 GITHUB_API="https://api.github.com/repos/${REPO}"
