@@ -2,6 +2,13 @@
 
 A command-line translation tool.
 
+## Features
+
+- 🖥️ **Cross-platform** — runs on Linux (glibc/musl) and macOS (Apple Silicon)
+- 📋 **Clipboard support** — no text argument needed, translates clipboard content automatically
+- 🌐 **9 languages** — Chinese, English, Japanese, French, Spanish, Russian, Latin, Korean, Traditional Chinese
+- ⚡ **Lightweight & fast** — single static binary, no runtime dependencies
+
 ## Installation
 
 ### One-click install
@@ -43,6 +50,7 @@ make darwin-arm64 && sudo cp build/fy-darwin-arm64 /usr/local/bin/fy   # Apple S
 Download from [GitHub Releases](https://github.com/mars-base/fy/releases). Release builds include:
 - Linux: glibc + musl (static)
 - macOS: arm64 (Apple Silicon)
+- Windows: x86_64-pc-windows-msvc
 
 ## Usage
 
