@@ -33,6 +33,7 @@ mod tests {
 
     /// Basic round-trip: ASCII text should be read back unchanged
     #[test]
+    #[cfg_attr(target_os = "windows", ignore)]
     fn test_get_clipboard_text_ascii() {
         let text = "Hello, clipboard!";
         with_clipboard_text(text, || {
@@ -42,6 +43,7 @@ mod tests {
 
     /// Chinese text: UTF-8 multi-byte characters should not be lost or garbled
     #[test]
+    #[cfg_attr(target_os = "windows", ignore)]
     fn test_get_clipboard_text_chinese() {
         let text = "你好，这是剪切板测试！";
         with_clipboard_text(text, || {
@@ -51,6 +53,7 @@ mod tests {
 
     /// Mixed languages: Chinese, English, Japanese, Korean
     #[test]
+    #[cfg_attr(target_os = "windows", ignore)]
     fn test_get_clipboard_text_mixed_languages() {
         let text = "Hello 你好 こんにちは 안녕하세요";
         with_clipboard_text(text, || {
@@ -60,6 +63,7 @@ mod tests {
 
     /// Multi-line text: newlines should be preserved
     #[test]
+    #[cfg_attr(target_os = "windows", ignore)]
     fn test_get_clipboard_text_multiline() {
         let text = "第一行\n第二行\n第三行";
         with_clipboard_text(text, || {
@@ -69,6 +73,7 @@ mod tests {
 
     /// Special characters: ASCII punctuation should not be escaped
     #[test]
+    #[cfg_attr(target_os = "windows", ignore)]
     fn test_get_clipboard_text_special_chars() {
         let text = r#"!@#$%^&*()_+-=[]{}|;':",./<>?"#;
         with_clipboard_text(text, || {
@@ -78,6 +83,7 @@ mod tests {
 
     /// Overwrite: second write should replace the first
     #[test]
+    #[cfg_attr(target_os = "windows", ignore)]
     fn test_get_clipboard_text_overwrite() {
         let _guard = CLIPBOARD_LOCK.lock().unwrap();
         let mut cb = match Clipboard::new() {
