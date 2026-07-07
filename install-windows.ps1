@@ -69,6 +69,8 @@ $userPath = [Environment]::GetEnvironmentVariable("Path", "User")
 if ($userPath -notlike "*$InstallDir*") {
     [Environment]::SetEnvironmentVariable("Path", "$userPath;$InstallDir", "User")
     Write-Success "Added $InstallDir to user PATH"
+    # Refresh PATH in the current session so the user can run fy immediately
+    $env:Path = "$env:Path;$InstallDir"
 } else {
     Write-Info "$InstallDir already in user PATH"
 }
@@ -77,4 +79,4 @@ if ($userPath -notlike "*$InstallDir*") {
 $installedVersion = & $outFile "--help" 2>&1 | Select-Object -First 1
 Write-Success "fy installed: $installedVersion"
 Write-Host ""
-Write-Host "Restart your terminal, then try: fy en 你好世界" -ForegroundColor Cyan
+Write-Host "Try it now: fy en 你好世界" -ForegroundColor Cyan
