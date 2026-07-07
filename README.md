@@ -4,7 +4,7 @@ A command-line translation tool.
 
 ## Features
 
-- 🖥️ **Cross-platform** — runs on Linux (glibc/musl) and macOS (Apple Silicon)
+- 🖥️ **Cross-platform** — runs on Linux (glibc/musl), macOS (Apple Silicon), and Windows (x86_64)
 - 📋 **Clipboard support** — no text argument needed, translates clipboard content automatically
 - 🌐 **9 languages** — Chinese, English, Japanese, French, Spanish, Russian, Latin, Korean, Traditional Chinese
 - ⚡ **Lightweight & fast** — single static binary, no runtime dependencies
@@ -27,7 +27,18 @@ chmod +x install.sh
 ./install.sh --version v0.1.1     # install specific version
 ```
 
-Supported: **macOS Apple Silicon (arm64)** and **Linux x86_64** (musl by default).
+Supported: **macOS Apple Silicon (arm64)**, **Linux x86_64** (musl by default), and **Windows x86_64**.
+
+**Windows**
+
+```powershell
+# Install latest version
+irm https://raw.githubusercontent.com/mars-base/fy/main/install-windows.ps1 | iex
+
+# Or download and run with parameters
+irm https://raw.githubusercontent.com/mars-base/fy/main/install-windows.ps1 -OutFile install-windows.ps1
+.\install-windows.ps1 -Version "0.1.3"
+```
 
 ### Build from source
 
