@@ -20,3 +20,18 @@ pub const LANGUAGE_MAP: &[(&str, &str, &str)] = &[
     ("ko", "韩文", "Korean"),
     ("tw", "繁体中文", "Traditional Chinese"),
 ];
+
+// Language code mapping: fy code → MyMemory code
+pub const MYMEMORY_LANG_MAP: &[(&str, &str)] = &[
+    ("zh", "zh-CN"),
+    ("en", "en-US"),
+    ("ja", "ja-JP"),
+    ("fr", "fr-FR"),
+    ("es", "es-ES"),
+    ("ru", "ru-RU"),
+    ("la", "la"),
+    ("ko", "ko-KR"),
+    ("tw", "zh-TW"),
+];
+
+pub const MYMEMORY_API_URL: &str = "https://api.mymemory.translated.net/get";
