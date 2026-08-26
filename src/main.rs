@@ -22,8 +22,9 @@ fn print_help() {
 async fn translate_async(text: &str, target_language: &str) -> String {
     // Auto-detect direction: if source and target are the same language, flip to the other
     let detected_sl = detect_source_language(text);
+    let detected_sl_mapped = get_mymemory_lang_code(detected_sl);
     let target_sl = get_mymemory_lang_code(target_language);
-    let final_target = if detected_sl == target_sl {
+    let final_target = if detected_sl_mapped == target_sl {
         // Same language detected, flip direction
         if target_sl == "zh-CN" || target_sl == "zh-TW" {
             "en"
