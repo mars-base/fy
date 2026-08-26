@@ -20,15 +20,29 @@ fn print_help() {
 }
 
 async fn translate_async(text: &str, target_language: &str) -> String {
+    // Auto-detect direction: if source and target are the same language, flip to the other
+    let detected_sl = detect_source_language(text);
+    let target_sl = get_mymemory_lang_code(target_language);
+    let final_target = if detected_sl == target_sl {
+        // Same language detected, flip direction
+        if target_sl == "zh-CN" || target_sl == "zh-TW" {
+            "en"
+        } else {
+            "zh"
+        }
+    } else {
+        target_language
+    };
+
     // Try Google Translate first
-    let result = google_translate(text, target_language).await;
+    let result = google_translate(text, final_target).await;
     if result != "Translation failed" {
         return result;
     }
 
     // Fallback to MyMemory
     println!("[Warn] Google Translate failed, falling back to MyMemory...");
-    mymemory_translate(text, target_language).await
+    mymemory_translate(text, final_target).await
 }
 
 async fn google_translate(text: &str, target_language: &str) -> String {
