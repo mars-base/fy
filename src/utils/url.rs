@@ -29,19 +29,25 @@ impl Url {
         body: &str,
         timeout: Duration,
     ) -> Self {
+        // Support socks5/http proxy via FY_PROXY env var (e.g. socks5://127.0.0.1:1080)
+        let proxy = std::env::var("FY_PROXY").ok().filter(|p| !p.is_empty());
+
+        let mut async_builder = reqwest::Client::builder().timeout(timeout);
+        let mut sync_builder = reqwest::blocking::Client::builder().timeout(timeout);
+        if let Some(ref p) = proxy {
+            if let Ok(proxy_obj) = reqwest::Proxy::all(p) {
+                async_builder = async_builder.proxy(proxy_obj.clone());
+                sync_builder = sync_builder.proxy(proxy_obj);
+            }
+        }
+
         Url {
             url: url.to_string(),
             method: method.to_string(),
             headers,
             body: body.to_string(),
-            client: reqwest::blocking::Client::builder()
-                .timeout(timeout)
-                .build()
-                .unwrap(),
-            async_client: reqwest::Client::builder()
-                .timeout(timeout)
-                .build()
-                .unwrap(),
+            client: sync_builder.build().unwrap(),
+            async_client: async_builder.build().unwrap(),
         }
     }
 
