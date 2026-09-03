@@ -17,13 +17,16 @@ fn print_help() {
     println!("Examples:");
     println!("  fy zh hello                      Translate 'hello' to Chinese");
     println!("  fy en 你好                       Translate '你好' to English");
-    println!("  fy ja \"good morning\"            Translate to Japanese");
+    println!("  fy ja \"good morning\"             Translate to Japanese");
     println!("  fy zh                            Translate clipboard content to Chinese");
-    println!("  FY_PROXY=socks5://127.0.0.1:1080 fy zh hello   Use a socks5 proxy");
+    println!();
+    println!("Proxy:");
+    println!("  FY_PROXY=socks5h://127.0.0.1:1080 fy zh hello   Use a socks5 proxy");
     println!();
     println!("Supported languages:");
     for (code, name, english_name) in vars::LANGUAGE_MAP {
-        println!("  {}: {} ({})", code, name, english_name);
+        let pad = " ".repeat(9 - 2 * name.chars().count());
+        println!("  {}: {}{} ({})", code, name, pad, english_name);
     }
 }
 
