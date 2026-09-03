@@ -289,7 +289,7 @@ dependencies = [
 
 [[package]]
 name = "fy"
-version = "0.1.10"
+version = "0.1.11"
 dependencies = [
  "arboard",
  "dirs",
